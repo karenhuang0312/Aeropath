@@ -70,19 +70,16 @@ const deletePost = db.prepare(`
 module.exports = {
   user: {
     create: (data) => {
-      const result = createUser.run(data.email, data.username, data.password);
+      const result = createUser.run(data.username, data.password);
       return { id: result.lastInsertRowid, ...data };
     },
     findUnique: ({ where }) => {
-      if (where.email) return findUserByEmail.get(where.email);
       if (where.id) return findUserById.get(where.id);
       return null;
     },
     findFirst: ({ where }) => {
       if (where.OR) {
         for (const condition of where.OR) {
-          if (condition.email) {
-            const user = findUserByEmail.get(condition.email);
             if (user) return user;
           }
           if (condition.username) {
