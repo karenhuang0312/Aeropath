@@ -29,13 +29,10 @@ db.exec(`
 
 // Simple ORM-like interface
 const createUser = db.prepare(`
-  INSERT INTO User (email, username, password) 
+  INSERT INTO User (username, password) 
   VALUES (?, ?, ?)
 `);
 
-const findUserByEmail = db.prepare(`
-  SELECT * FROM User WHERE email = ?
-`);
 
 const findUserById = db.prepare(`
   SELECT * FROM User WHERE id = ?
@@ -47,14 +44,14 @@ const createPost = db.prepare(`
 `);
 
 const findAllPosts = db.prepare(`
-  SELECT p.*, u.username, u.email 
+  SELECT p.*, u.username 
   FROM Post p 
   JOIN User u ON p.authorId = u.id 
   ORDER BY p.createdAt DESC
 `);
 
 const findPostById = db.prepare(`
-  SELECT p.*, u.username, u.email 
+  SELECT p.*, u.username 
   FROM Post p 
   JOIN User u ON p.authorId = u.id 
   WHERE p.id = ?
@@ -112,7 +109,6 @@ module.exports = {
         author: {
           id: post.authorId,
           username: post.username,
-          email: post.email
         }
       };
     },
@@ -129,7 +125,6 @@ module.exports = {
         author: {
           id: post.authorId,
           username: post.username,
-          email: post.email
         }
       }));
     },
@@ -147,7 +142,6 @@ module.exports = {
         author: {
           id: post.authorId,
           username: post.username,
-          email: post.email
         }
       };
     },
@@ -172,7 +166,6 @@ module.exports = {
         author: {
           id: current.authorId,
           username: current.username,
-          email: current.email
         }
       };
     },
