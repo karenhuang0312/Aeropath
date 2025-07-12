@@ -1,5 +1,4 @@
 const Database = require('better-sqlite3');
-const bcrypt = require('bcryptjs');
 const path = require('path');
 
 // Simple SQLite database initialization
@@ -27,17 +26,21 @@ db.exec(`
   );
 `);
 
-// Simple ORM-like interface
+// User queries
 const createUser = db.prepare(`
   INSERT INTO User (username, password) 
-  VALUES (?, ?, ?)
+  VALUES (?, ?)
 `);
-
 
 const findUserById = db.prepare(`
   SELECT * FROM User WHERE id = ?
 `);
 
+const findUserByUsername = db.prepare(`
+  SELECT * FROM User WHERE username = ?
+`);
+
+// Post queries
 const createPost = db.prepare(`
   INSERT INTO Post (title, content, published, authorId) 
   VALUES (?, ?, ?, ?)
@@ -71,19 +74,19 @@ module.exports = {
   user: {
     create: (data) => {
       const result = createUser.run(data.username, data.password);
-      return { id: result.lastInsertRowid, ...data };
+      return { id: result.lastInsertRowid, username: data.username };
     },
     findUnique: ({ where }) => {
       if (where.id) return findUserById.get(where.id);
+      if (where.username) return findUserByUsername.get(where.username);
       return null;
     },
     findFirst: ({ where }) => {
+      // Only need to support OR with username for our use case
       if (where.OR) {
         for (const condition of where.OR) {
-            if (user) return user;
-          }
           if (condition.username) {
-            const user = db.prepare('SELECT * FROM User WHERE username = ?').get(condition.username);
+            const user = findUserByUsername.get(condition.username);
             if (user) return user;
           }
         }
@@ -175,7 +178,3 @@ module.exports = {
     db.close();
   }
 };
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes);
-app.use("/api/search", searchRoutes);
