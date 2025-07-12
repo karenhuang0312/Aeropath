@@ -186,3 +186,7 @@ module.exports = {
     db.close();
   }
 };
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/search", searchRoutes);
