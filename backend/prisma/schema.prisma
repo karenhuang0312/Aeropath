@@ -1,5 +1,13 @@
-// ... existing generator and datasource ...
+generator client {
+  provider = "prisma-client-js"
+}
 
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ... keep your existing model definitions below ...
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
@@ -7,7 +15,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
-  searches  Search[]    // <--- add this line for relation
+  searches  Search[]
 }
 
 model Post {
@@ -21,7 +29,6 @@ model Post {
   updatedAt DateTime @updatedAt
 }
 
-// Add the Search model below:
 model Search {
   id          Int      @id @default(autoincrement())
   userId      Int
