@@ -1,38 +1,33 @@
 # UI Wireframes Template
 
-_Use this template to link to your wireframe images and describe the key screens and user flows for your application._
+## Update this document as we decide on how the UI should look. What is present here is simply a prototype.
 
----
 
 ## Overview
-_Describe the overall user experience and main navigation structure._
+The Flight Booking Website MVP provides a clean, intuitive way to search and compare flights. The app starts with a language selection screen (English, Spanish, Mandarin), followed by a homepage to browse popular destinations, a form to search and sort flights, and basic user authentication (sign in/sign up, no email/number required). Users are redirected to the airline’s official website to book.
 
 ---
 
 ## Key Screens
-_Provide a list of your application's main screens. For each, optionally link to or embed an image of the wireframe._
-
-- **Home Screen**:
-- **Login/Signup Screen**:
-- **Dashboard/Main Area**: ![Dashboard](path/to/dashboard.png)
-- **Detail Screen**: ![Detail Screen](path/to/detail-screen.png)
-- **Settings/Profile**:
-
-<small>(Replace the example links and images above with your actual wireframe image paths or URLs.)</small>
+- **Language Selection Screen**: Top bar prompts “Select a language--Seleccione un idioma--選擇語言”; three buttons below for English, Español, 普通话.
+- **Home Screen**: Browse featured/popular destinations.
+- **Search Form**: Input for destination, date, sort by price or airline.
+- **Flight Results**: List of available flights, sortable.
+- **Login/Signup Screen**: Basic account creation; no email/phone required.
+- **Redirect Screen**: Simple UI for redirecting users to airline site.
 
 ---
 
 ## User Flows
-_Describe the main user journeys through your app. Optionally, link to flow diagrams or additional images._
+- **Searching for Flights**
+  1. Enter preferred language.
+  2. Browse homepage or enter search criteria.
+  3. View sortable flight results.
+  4. Select a flight; redirected to airline website for booking.
 
-- **Example: Placing an Order**
-  1. User logs in
-  2. User browses menu
-  3. User selects items and adds to cart
-  4. User reviews cart and checks out
-  5. User receives confirmation
-  <small>(Example only. Replace with your actual flows.)</small>
+- **User Account**
+  1. Click sign up/sign in.
+  2. Enter username and password.
+  3. Access saved searches or preferences (MVP: minimal account features).
 
 ---
-
-<small>Update this document as your UI evolves. Remove examples and replace with your actual wireframes and flows.</small>
