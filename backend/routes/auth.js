@@ -27,20 +27,19 @@ const authenticateToken = (req, res, next) => {
 // Register
 router.post('/register', async (req, res) => {
   try {
-    const { email, username, password } = req.body;
+    const { username, password } = req.body;
 
     // Check if user already exists
     const existingUser = db.user.findFirst({
       where: {
         OR: [
-          { email },
           { username }
         ]
       }
     });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'User already exists with this email or username' });
+      return res.status(400).json({ error: 'User already exists with this username' });
     }
 
     // Hash password
@@ -48,14 +47,13 @@ router.post('/register', async (req, res) => {
 
     // Create user
     const user = db.user.create({
-      email,
       username,
       password: hashedPassword
     });
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user.id, email: user.email, username: user.username },
+      { userId: user.id, username: user.username },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -72,7 +70,6 @@ router.post('/register', async (req, res) => {
       message: 'User created successfully',
       user: {
         id: user.id,
-        email: user.email,
         username: user.username
       }
     });
@@ -85,11 +82,11 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { password } = req.body;
 
     // Find user
     const user = db.user.findUnique({
-      where: { email }
+      where: { username }
     });
 
     if (!user) {
@@ -104,7 +101,7 @@ router.post('/login', async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user.id, email: user.email, username: user.username },
+      { userId: user.id, username: user.username },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -121,7 +118,6 @@ router.post('/login', async (req, res) => {
       message: 'Login successful',
       user: {
         id: user.id,
-        email: user.email,
         username: user.username
       }
     });
@@ -145,7 +141,6 @@ router.get('/me', authenticateToken, async (req, res) => {
     res.json({ 
       user: {
         id: user.id,
-        email: user.email,
         username: user.username,
         createdAt: user.createdAt
       }
