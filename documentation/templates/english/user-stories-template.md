@@ -87,7 +87,7 @@
 - **US-008:** (Potential future) As a user, I want to search and book hotels and tours so that I can plan my entire trip in one place.
 
   _Expanded Context / description:_
-  > This is for potential future MVP expansion and is not included in the initial launch.
+  > This is for future MVP expansion and is not included in the initial launch.
 
   - **Acceptance Criteria:**
     - [ ] Hotels/tours search interfaces are planned but not implemented in MVP.
@@ -95,4 +95,5 @@
 
 ---
 
+_Add more user stories as your project progresses._
 _Add more user stories as your project progresses._
