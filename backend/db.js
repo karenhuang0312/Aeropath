@@ -9,7 +9,6 @@ const db = new Database(path.join(__dirname, 'prisma', 'dev.db'));
 db.exec(`
   CREATE TABLE IF NOT EXISTS User (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE NOT NULL,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
