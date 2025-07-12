@@ -1,46 +1,59 @@
 # Project Requirements Template
 
 ## 1. Project Name  
-_What is the title of your project?_
+Flight Booking Website MVP
 
 ---
 
 ## 2. Team Members  
-_List all contributors working on the project._
+_Contributors working on the project:_  
+- Karen Huang (Product Manager)
+- Yamiley Martinez (Co-Product Manager)
+- Vidal Monroy
+- Madelyn Pinzon
+- Brianah Rudolph
+- Juana Molina
 
 ---
 
 ## 3. Project Overview  
-_A short overview (2-3 sentences) describing what your app or project will do._
-
-Our app helps restaurant customers like Jane quickly find, order, and reorder their favorite meals. By providing a personalized dashboard, order history, and easy reordering, we aim to streamline the dining experience and increase customer retention.
-<small>(Example only; replace with your actual project overview.)</small>
+A flight booking website that leverages the AviationStack API (or similar) to allow users to search for flights, browse destinations, and easily look up tickets. The website provides sorting options by price and airline, and features a simple account system (sign in/sign up, no email/number required). The MVP will be ready for demo by the end of the week.
 
 ---
 
 ## 4. Problem Statement  
-_What problem does this project solve? Who is the target user?_
+Finding and booking flights online can be overwhelming due to cluttered interfaces and too many requirements. Our site aims to simplify the process, making it easier for users to browse destinations, compare prices, and quickly find flights without needing to provide personal information like email or phone number.
 
 ---
 
 ## 5. Key Features (User Stories)  
-_List the key features in user story format. Example:_  
-- As a [user], I want to [do something] so that [benefit].
-  <small>(Example only; replace with your actual user story.)</small>
+- As a user, I want to choose my preferred language (English, Spanish, Mandarin) on the first screen.
+- As a user, I want to browse popular destinations from the homepage.
+- As a user, I want to search for flights using a form.
+- As a user, I want to sort available flights by price and airline.
+- As a user, I want to sign up or sign in (without providing email or phone).
+- (Potential future MVP expansion: search/book hotels and tours)
 
 ---
 
 ## 6. Out of Scope  
-_What will NOT be included in the first version? (Optional but recommended)_
+- Booking flights directly through our site/app (users will be redirected to the airline’s official website for booking)
+- Payment integration
+- Real-time seat selection
+- Detailed loyalty programs
+- Advanced user profiles (only basic accounts for MVP)
 
 ---
 
 ## 7. Success Criteria  
-_How will you know if the project is successful?_
+- A functional project: users can search, sort, and view flight options for chosen destinations.
+- Users can create and use basic accounts.
+- The interface should be intuitive and easy to use, reducing confusion and tediousness in the booking/search process.
+- Language selection screen supporting English, Spanish, and Mandarin.
+- MVP is functional and ready for demonstration within the first week.
 
 ## 8. Timeline / Milestones  
-_Roughly outline the planned phases of work. Example:_  
-- Week 1: Setup & Authentication  
-- Week 2: Core Features
+- Week 1: MVP core features (language selection, browse, search, sort, user auth, redirect to airline booking)
+- Week 2+: To be determined after MVP presentation.
 
 ---
