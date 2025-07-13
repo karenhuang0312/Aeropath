@@ -5,8 +5,8 @@ import { toast } from 'sonner';
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (email: string, username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
+  register: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
 }
@@ -38,16 +38,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await api.get('/auth/me');
       setUser(response.data.user);
     } catch (error) {
-      // User not authenticated
       setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (username: string, password: string) => {
     try {
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('/auth/login', { username, password });
       setUser(response.data.user);
       toast.success('Login successful!');
     } catch (error: any) {
@@ -57,9 +56,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const register = async (email: string, username: string, password: string) => {
+  const register = async (username: string, password: string) => {
     try {
-      const response = await api.post('/auth/register', { email, username, password });
+      const response = await api.post('/auth/register', { username, password });
       setUser(response.data.user);
       toast.success('Registration successful!');
     } catch (error: any) {
