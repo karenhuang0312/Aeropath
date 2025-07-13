@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/hooks/useAuth';
 
 const Register = () => {
-  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,7 +16,7 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !username || !password || !confirmPassword) return;
+    if (!username || !password || !confirmPassword) return;
 
     if (password !== confirmPassword) {
       alert('Passwords do not match');
@@ -26,7 +25,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      await register(email, username, password);
+      await register(username, password);
       navigate('/dashboard');
     } catch (error) {
       // Error is handled in the auth hook
@@ -46,17 +45,6 @@ const Register = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-              />
-            </div>
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input
