@@ -1,29 +1,70 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
-type Language = "en" | "es" | "zh";
-const languages: Record<Language, string> = {
+/**
+ * Supported language codes.
+ */
+export type Language = "en" | "es" | "zh";
+
+/**
+ * Display names for each supported language.
+ */
+export const languages: Record<Language, string> = {
   en: "English",
   es: "Español",
   zh: "普通话",
 };
 
-const LanguageContext = createContext<{
+interface LanguageContextValue {
   language: Language;
   setLanguage: (lang: Language) => void;
-}>({
+}
+
+/**
+ * Internal: throws if setLanguage is used outside a provider.
+ */
+function throwSetLanguage(): never {
+  throw new Error("setLanguage called outside LanguageProvider");
+}
+
+/**
+ * Context for language selection.
+ */
+const LanguageContext = createContext<LanguageContextValue>({
   language: "en",
-  setLanguage: () => {},
+  setLanguage: throwSetLanguage,
 });
 
+/**
+ * Returns the current language and the setter function.
+ */
 export const useLanguage = () => useContext(LanguageContext);
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+/**
+ * React context provider for language selection.
+ * Persists selection in localStorage, SSR-safe.
+ */
+export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>(() => {
-    return (localStorage.getItem("language") as Language) || "en";
+    // SSR-safe and validates the stored language
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("language");
+      if (stored === "en" || stored === "es" || stored === "zh") {
+        return stored;
+      }
+    }
+    return "en";
   });
 
   useEffect(() => {
-    localStorage.setItem("language", language);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("language", language);
+    }
   }, [language]);
 
   return (
@@ -32,5 +73,3 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     </LanguageContext.Provider>
   );
 };
-
-export { languages };
