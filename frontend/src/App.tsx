@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { AuthProvider, useAuth } from './hooks/useAuth';
-import { LanguageProvider, useLanguage } from './hooks/useLanguage'; // Make sure the filename matches!
 import LanguageSelect from './pages/LanguageSelect';
 import Home from './pages/Home';
 import Login from './pages/Login';
