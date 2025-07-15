@@ -11,6 +11,8 @@
     - [ ] Language selection appears as the first screen on initial visit.
     - [ ] All UI text updates to the selected language.
     - [ ] Supported languages: English, Spanish, Mandarin.
+    - [ ] All interactive elements are accessible via keyboard navigation.
+    - [ ] Language selection screen supports screen readers.
 
 ---
 
@@ -69,14 +71,14 @@
 
   - **Acceptance Criteria:**
     - [ ] Each flight result provides a clear “Book” or “Go to Airline” button.
-    - [ ] Redirect is seamless and opens the airline’s website.
+    - [ ] Redirect occurs within 2 seconds without errors.
 
 ---
 
 - **US-007:** As a user, I want to see clear error messages and empty states when no flights match my search so that I am not confused.
 
   _Expanded Context / description:_
-  > If a search fails, no flights are found, or an API error occurs, the UI displays helpful messages and suggestions.
+  > If a search fails, no flights are found, or an API error occurs, the UI displays helpful messages and suggestions. Example Message: "No flights found. Please try different dates or destinations."
 
   - **Acceptance Criteria:**
     - [ ] Empty state and error messages are shown when appropriate.
