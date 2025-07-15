@@ -8,15 +8,14 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Search from "./pages/Search";
-// ... in <Routes>
-<Route path="/search" element={<Search />} />
+import Search from './pages/Search';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
   return user ? <>{children}</> : <Navigate to="/login" replace />;
 };
+
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
@@ -39,6 +38,7 @@ function App() {
               <Routes>
                 <Route path="/select-language" element={<LanguageSelect />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -52,4 +52,5 @@ function App() {
     </LanguageProvider>
   );
 }
+
 export default App;
