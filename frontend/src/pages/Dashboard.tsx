@@ -5,27 +5,50 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
-// import { usePosts } from '@/hooks/usePosts'; // Uncomment when ready
+import { usePosts } from '@/hooks/usePosts';
 import { Plus, Edit, Trash2, LogOut, User } from 'lucide-react';
+import { Post } from '@/types';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  // const { posts, loading, createPost, updatePost, deletePost } = usePosts(); // Uncomment when ready
+  const { posts, loading, createPost, updatePost, deletePost, error } = usePosts();
   const [showCreateForm, setShowCreateForm] = useState(false);
-  // const [editingPost, setEditingPost] = useState<Post | null>(null); // Placeholder for post editing logic
-  // const [formData, setFormData] = useState({ title: '', content: '', published: false }); // Placeholder
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [formData, setFormData] = useState({ title: '', content: '', published: false });
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logout();
       navigate('/');
-    } catch (error) {
-      // Error handled in auth hook
+    } catch (error) {}
+  };
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await createPost(formData);
+    setFormData({ title: '', content: '', published: false });
+    setShowCreateForm(false);
+  };
+
+  const handleEdit = (post: Post) => {
+    setEditingPost(post);
+    setFormData({ title: post.title, content: post.content || '', published: post.published });
+    setShowCreateForm(false);
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingPost) {
+      await updatePost(editingPost.id, formData);
+      setEditingPost(null);
+      setFormData({ title: '', content: '', published: false });
     }
   };
 
-  // Placeholder for create/edit form logic
+  const handleDelete = async (id: number) => {
+    await deletePost(id);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -51,35 +74,117 @@ const Dashboard = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Create Post Section - UNFINISHED */}
+
+        {/* Create/Edit Post Section */}
         <div className="mb-8">
-          <Button onClick={() => setShowCreateForm(true)} className="mb-6">
+          <Button onClick={() => { setShowCreateForm(true); setEditingPost(null); }} className="mb-6">
             <Plus className="h-4 w-4 mr-2" />
-            Create New Post (unimplemented)
+            Create New Post
           </Button>
-          {/* Placeholder: Add create/edit post form here */}
+          {(showCreateForm || editingPost) && (
+            <Card className="mb-8">
+              <CardContent>
+                <form onSubmit={editingPost ? handleUpdate : handleCreate} className="space-y-4">
+                  <div>
+                    <Label htmlFor="title">Title</Label>
+                    <Input
+                      id="title"
+                      value={formData.title}
+                      onChange={e => setFormData({ ...formData, title: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="content">Content</Label>
+                    <Input
+                      id="content"
+                      value={formData.content}
+                      onChange={e => setFormData({ ...formData, content: e.target.value })}
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={formData.published}
+                      onChange={e => setFormData({ ...formData, published: e.target.checked })}
+                      id="published"
+                    />
+                    <Label htmlFor="published">Published</Label>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button type="submit">{editingPost ? "Update" : "Create"}</Button>
+                    <Button type="button" variant="outline" onClick={() => { setShowCreateForm(false); setEditingPost(null); }}>
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
-        {/* Posts Section - UNFINISHED */}
+        {/* Posts Section */}
         <div className="grid gap-6">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold text-gray-900">Your Posts</h2>
-            {/* <span className="text-sm text-gray-500">{userPosts.length} posts</span> */}
           </div>
-          <div className="text-center py-8">
-            <p className="text-gray-500">Posts display is unfinished. Complete this tomorrow.</p>
-          </div>
+          {loading ? (
+            <div className="text-center py-8"><p className="text-gray-500">Loading posts...</p></div>
+          ) : error ? (
+            <div className="text-center text-red-500 py-8">{error}</div>
+          ) : posts.length === 0 ? (
+            <div className="text-center py-8"><p className="text-gray-500">No posts yet.</p></div>
+          ) : (
+            <div className="space-y-4">
+              {posts.filter(p => p.authorId === user?.id).map(post => (
+                <Card key={post.id}>
+                  <CardHeader>
+                    <CardTitle>
+                      {post.title}
+                      {post.published && <span className="ml-2 text-xs text-green-600">(Published)</span>}
+                    </CardTitle>
+                    <CardDescription>{post.content}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex space-x-2">
+                      <Button size="sm" onClick={() => handleEdit(post)}><Edit className="h-4 w-4 mr-1" />Edit</Button>
+                      <Button size="sm" variant="destructive" onClick={() => handleDelete(post.id)}><Trash2 className="h-4 w-4 mr-1" />Delete</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* All Posts Section - UNFINISHED */}
+        {/* All Posts Section */}
         <div className="mt-12">
           <h2 className="text-xl font-semibold text-gray-900 mb-6">All Posts</h2>
           <div className="space-y-4">
-            <Card>
-              <CardContent>
-                <p className="text-gray-500">All posts display is unfinished. Complete this tomorrow.</p>
-              </CardContent>
-            </Card>
+            {loading ? (
+              <div className="text-center py-8"><p className="text-gray-500">Loading...</p></div>
+            ) : error ? (
+              <div className="text-center text-red-500 py-8">{error}</div>
+            ) : posts.length === 0 ? (
+              <div className="text-center py-8"><p className="text-gray-500">No posts found.</p></div>
+            ) : (
+              posts.map(post => (
+                <Card key={post.id}>
+                  <CardHeader>
+                    <CardTitle>
+                      {post.title}
+                      {post.published && <span className="ml-2 text-xs text-green-600">(Published)</span>}
+                    </CardTitle>
+                    <CardDescription>
+                      by <span className="font-medium">{post.author.username}</span>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p>{post.content}</p>
+                  </CardContent>
+                </Card>
+              ))
+            )}
           </div>
         </div>
       </main>
