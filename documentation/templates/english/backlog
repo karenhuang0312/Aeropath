@@ -13,4 +13,16 @@
 
 ---
 
+- **US-002-B:** As a user, I want to choose my preferred language (English, Spanish, Mandarin) on the first screen so that I can use the app in my native language.
+
+  _Expanded Context / description:_
+  > The language selection is presented immediately when the user opens the app. All subsequent navigation and text elements reflect the chosen language.
+
+  - **Acceptance Criteria:**
+    - [ ] Language selection appears as the first screen on initial visit.
+    - [ ] All UI text updates to the selected language.
+    - [ ] Supported languages: English, Spanish, Mandarin.
+    - [ ] All interactive elements are accessible via keyboard navigation.
+    - [ ] Language selection screen supports screen readers.
+
 _Add more user stories as your project progresses._
