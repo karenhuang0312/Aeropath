@@ -21,8 +21,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
+const flightRoutes = require("./routes/flights");
+...
+app.use("/api/flights", flightRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
