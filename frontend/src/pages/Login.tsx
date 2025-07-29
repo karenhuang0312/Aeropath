@@ -19,9 +19,11 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await login(username, password);
-      navigate('/dashboard');
-    } catch (error) {
+  await login(username, password);
+  navigate('/dashboard');
+} catch (error: any) {
+  setErrorMessage(error.message || 'Login failed');
+}
       // Error is handled in the auth hook
     } finally {
       setLoading(false);
