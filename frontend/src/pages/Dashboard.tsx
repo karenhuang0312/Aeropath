@@ -218,3 +218,4 @@ export const DashboardPosts = ({ posts, user, handleEdit, handleDelete }) => (
     ))}
   </div>
 );
+<DashboardPosts posts={posts} user={user} handleEdit={handleEdit} handleDelete={handleDelete} />
