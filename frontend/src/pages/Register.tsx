@@ -103,3 +103,8 @@ const Register = () => {
 </form>
 
 export default Register;
+const [errorMessage, setErrorMessage] = useState('');
+if (password !== confirmPassword) {
+  setErrorMessage('Passwords do not match');
+  return;
+}
