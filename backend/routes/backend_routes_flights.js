@@ -2,48 +2,50 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
+const KIWI_API_KEY = process.env.KIWI_API_KEY;
 
-// Example: GET /api/flights?origin=JFK&destination=CDG&date=2025-09-01&sort=price
+// Helper: Map Kiwi flight data to frontend contract
+function mapKiwiFlights(data) {
+  return data.map((flight, i) => ({
+    id: flight.id || `flight-${i}`,
+    origin: flight.cityFrom,
+    destination: flight.cityTo,
+    date: flight.local_departure.slice(0, 10), // YYYY-MM-DD
+    airline: flight.airlines && flight.airlines[0],
+    price: flight.price,
+    link: flight.deep_link,
+  }));
+}
+
 router.get('/', async (req, res) => {
-  const { origin, destination, date, sort = 'price' } = req.query;
-
+  const { origin, destination, date, sort } = req.query;
   if (!origin || !destination || !date) {
-    return res.status(400).json({ error: "origin, destination, and date are required." });
+    return res.status(400).json({ error: "Missing required query parameters" });
   }
 
   try {
-    const response = await axios.get('https://kiwi-com-cheap-flights.p.rapidapi.com/cheapflights', {
-      params: {
-        origin,        // e.g., "JFK"
-        destination,   // e.g., "CDG"
-        depart_date: date, // e.g., "2025-09-01"
-        currency: "USD",
-        sort
-      },
+    // Query Kiwi API
+    const response = await axios.get('https://api.tequila.kiwi.com/v2/search', {
       headers: {
-        "X-RapidAPI-Key": RAPIDAPI_KEY,
-        "X-RapidAPI-Host": "kiwi-com-cheap-flights.p.rapidapi.com"
-      }
+        apikey: KIWI_API_KEY,
+      },
+      params: {
+        fly_from: origin,
+        fly_to: destination,
+        date_from: date,
+        date_to: date,
+        sort: sort === "price" ? "price" : "quality", // Kiwi supports price, quality, duration, etc.
+        limit: 20,
+        curr: "USD",
+      },
     });
 
-    // The API returns data in response.data.data
-    const flights = (response.data.data || []).map(f => ({
-      id: f.id || `${f.airlines}-${f.flight_number}-${f.departure_at}`,
-      airline: f.airlines,
-      flight_number: f.flight_number,
-      origin: f.origin,
-      destination: f.destination,
-      departure_time: f.departure_at,
-      arrival_time: f.arrival_at,
-      price: f.price,
-      link: f.deep_link || f.booking_link || "#"
-    }));
+    const results = mapKiwiFlights(response.data.data);
 
-    res.json(flights);
+    res.json(results);
   } catch (error) {
-    console.error(error?.response?.data || error.message);
-    res.status(500).json({ error: "Failed to fetch flights from Kiwi API." });
+    console.error("Kiwi API error:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to fetch flights" });
   }
 });
 
