@@ -208,3 +208,4 @@ const handleDelete = async (id: number) => {
     await deletePost(id);
   }
 };
+{successMessage && <div className="text-green-500 mb-2">{successMessage}</div>}
