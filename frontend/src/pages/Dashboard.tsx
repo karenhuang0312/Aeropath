@@ -219,3 +219,9 @@ export const DashboardPosts = ({ posts, user, handleEdit, handleDelete }) => (
   </div>
 );
 <DashboardPosts posts={posts} user={user} handleEdit={handleEdit} handleDelete={handleDelete} />
+{posts.length === 0 && (
+  <div className="text-center py-8">
+    <p className="text-gray-500 mb-4">No posts yet.</p>
+    <Button onClick={() => setShowCreateForm(true)}>Create your first post</Button>
+  </div>
+)}
