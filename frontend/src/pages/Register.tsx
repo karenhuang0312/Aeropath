@@ -95,5 +95,11 @@ const Register = () => {
     </div>
   );
 };
+{errorMessage && (
+  <div className="text-red-500 text-sm mb-2">{errorMessage}</div>
+)}
+<form ...>
+  {/* ...fields... */}
+</form>
 
 export default Register;
