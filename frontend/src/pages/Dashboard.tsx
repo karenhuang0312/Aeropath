@@ -190,6 +190,12 @@ const Dashboard = () => {
       </main>
     </div>
   );
+  <Button size="sm" onClick={() => handleEdit(post)} aria-label="Edit post">
+  <Edit className="h-4 w-4 mr-1" />Edit
+</Button>
+<Button size="sm" variant="destructive" onClick={() => handleDelete(post.id)} aria-label="Delete post">
+  <Trash2 className="h-4 w-4 mr-1" />Delete
+</Button>
 };
 
 export default Dashboard;
