@@ -1,0 +1,10 @@
+export const Toggle = ({ checked, onChange }) => (
+  <button
+    className={`w-10 h-6 rounded-full ${checked ? 'bg-green-500' : 'bg-gray-300'} relative`}
+    onClick={() => onChange(!checked)}
+    aria-pressed={checked}
+    aria-label="Toggle Published"
+  >
+    <span className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition ${checked ? 'translate-x-4' : ''}`}></span>
+  </button>
+);
