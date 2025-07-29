@@ -209,3 +209,12 @@ const handleDelete = async (id: number) => {
   }
 };
 {successMessage && <div className="text-green-500 mb-2">{successMessage}</div>}
+export const DashboardPosts = ({ posts, user, handleEdit, handleDelete }) => (
+  <div className="space-y-4">
+    {posts.filter(p => p.authorId === user?.id).map(post => (
+      <Card key={post.id}>
+        {/* ... */}
+      </Card>
+    ))}
+  </div>
+);
