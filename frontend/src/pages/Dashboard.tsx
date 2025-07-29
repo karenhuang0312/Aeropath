@@ -203,3 +203,8 @@ export default Dashboard;
   checked={formData.published}
   onChange={val => setFormData({ ...formData, published: val })}
 />
+const handleDelete = async (id: number) => {
+  if (window.confirm('Are you sure you want to delete this post?')) {
+    await deletePost(id);
+  }
+};
