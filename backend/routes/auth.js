@@ -85,7 +85,8 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   try {
-    const { password } = req.body;
+    // FIX: Destructure username from req.body
+    const { username, password } = req.body;
 
     // Find user
     const user = db.user.findUnique({
