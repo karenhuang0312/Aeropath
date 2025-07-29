@@ -51,6 +51,9 @@ router.post('/register', async (req, res) => {
       password: hashedPassword
     });
 
+    // Add username to destructuring
+    const { username, password } = req.body;
+    
     // Generate JWT token
     const token = jwt.sign(
       { userId: user.id, username: user.username },
