@@ -199,3 +199,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+<Toggle
+  checked={formData.published}
+  onChange={val => setFormData({ ...formData, published: val })}
+/>
