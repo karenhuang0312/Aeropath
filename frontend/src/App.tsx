@@ -1,7 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
+
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import { LanguageProvider, useLanguage } from './context/LanguageProvider';
+
 import LanguageSelect from './pages/LanguageSelect';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -9,22 +12,24 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 
+// Route for authenticated users
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   return user ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
+// Route for unauthenticated users
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
+// Language gate — redirect to language selection if none is selected
 const LanguageGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { language } = useLanguage();
-  if (!language) return <LanguageSelect />;
-  return <>{children}</>;
+  return language ? <>{children}</> : <LanguageSelect />;
 };
 
 function App() {
