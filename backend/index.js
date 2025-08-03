@@ -6,6 +6,7 @@ const db = require("./db");
 // Import routes
 const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
+const flightRoutes = require("./routes/flights");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,13 +22,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
-const flightRoutes = require('./routes/flights');
-...
-app.use('/api/flights', flightRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
-
-
+app.use("/api/flights", flightRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -47,7 +44,7 @@ app.listen(PORT, () => {
 
 // Graceful shutdown
 process.on("SIGINT", async () => {
-  db.$disconnect();
+  await db.$disconnect();
   process.exit(0);
 });
 
