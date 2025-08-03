@@ -1,7 +1,10 @@
 {
-  "name": "papaya",
+  "name": "aeropath",
   "version": "1.0.0",
   "description": "Discover new destinations, book flights, and enjoy the journey with Aeropath.",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
     "backend:dev": "cd backend && npm run dev",
@@ -19,15 +22,10 @@
   "keywords": [
     "travel",
     "aeropath",
-    "flight-booking",
     "react",
     "express",
-    "prisma",
-    "typescript"
+    "full-stack"
   ],
-  "author": "Karen Huang",
-  "license": "MIT",
-  "engines": {
-    "node": "22.x"
-  }
+  "author": "Your Name",
+  "license": "MIT"
 }
