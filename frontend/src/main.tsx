@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-import { LanguageProvider } from './context/LanguageProvider';
-import { AuthProvider } from './hooks/useAuth'; // Only if you're not already wrapping this in App.tsx
+import { AuthProvider } from './hooks/useAuth'; // Keep this only if useAuth is correctly set up
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <LanguageProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </LanguageProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>,
 );
