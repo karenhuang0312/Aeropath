@@ -182,7 +182,7 @@ const Dashboard = () => {
                       {post.published && <span className="ml-2 text-xs text-green-600">(Published)</span>}
                     </CardTitle>
                     <CardDescription>
-                      by <span className="font-medium">{post.author.username}</span>
+                      by <span className="font-medium">{post.author?.username || "Unknown"}</span>
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
