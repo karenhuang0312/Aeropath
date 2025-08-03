@@ -1,7 +1,7 @@
 {
-  "name": "full-stack-template",
+  "name": "papaya",
   "version": "1.0.0",
-  "description": "A complete full-stack template with React, Express, and Prisma",
+  "description": "Discover new destinations, book flights, and enjoy the journey with Aeropath.",
   "scripts": {
     "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
     "backend:dev": "cd backend && npm run dev",
@@ -17,13 +17,17 @@
     "concurrently": "^8.2.2"
   },
   "keywords": [
-    "full-stack",
+    "travel",
+    "aeropath",
+    "flight-booking",
     "react",
     "express",
     "prisma",
-    "jwt",
-    "template"
+    "typescript"
   ],
-  "author": "Noah Christopher",
-  "license": "MIT"
+  "author": "Karen Huang",
+  "license": "MIT",
+  "engines": {
+    "node": "22.x"
+  }
 }
