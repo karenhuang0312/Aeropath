@@ -3,7 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 
 const Register = () => {
@@ -11,6 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -19,7 +26,7 @@ const Register = () => {
     if (!username || !password || !confirmPassword) return;
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setErrorMessage('Passwords do not match');
       return;
     }
 
@@ -27,8 +34,8 @@ const Register = () => {
     try {
       await register(username, password);
       navigate('/dashboard');
-    } catch (error) {
-      // Error is handled in the auth hook
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -45,6 +52,9 @@ const Register = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {errorMessage && (
+              <div className="text-red-500 text-sm mb-2">{errorMessage}</div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input
@@ -95,16 +105,5 @@ const Register = () => {
     </div>
   );
 };
-{errorMessage && (
-  <div className="text-red-500 text-sm mb-2">{errorMessage}</div>
-)}
-<form ...>
-  {/* ...fields... */}
-</form>
 
 export default Register;
-const [errorMessage, setErrorMessage] = useState('');
-if (password !== confirmPassword) {
-  setErrorMessage('Passwords do not match');
-  return;
-}
