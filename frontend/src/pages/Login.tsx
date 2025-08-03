@@ -23,7 +23,8 @@ const Login = () => {
       await login(username, password);
       navigate('/dashboard');
     } catch (error: any) {
-      setErrorMessage(error.message || 'Login failed');
+    setErrorMessage(error?.message || String(error) || 'Login failed');
+}
     } finally {
       setLoading(false);
     }
