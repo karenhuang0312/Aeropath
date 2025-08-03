@@ -23,7 +23,11 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password || !confirmPassword) return;
+
+    if (!username || !password || !confirmPassword) {
+      setErrorMessage('All fields are required');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
@@ -31,11 +35,13 @@ const Register = () => {
     }
 
     setLoading(true);
+    setErrorMessage('');
+
     try {
       await register(username, password);
       navigate('/dashboard');
     } catch (error: any) {
-      setErrorMessage(error.message || 'Registration failed');
+      setErrorMessage(error?.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -53,7 +59,7 @@ const Register = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {errorMessage && (
-              <div className="text-red-500 text-sm mb-2">{errorMessage}</div>
+              <div className="text-red-500 text-sm">{errorMessage}</div>
             )}
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
@@ -62,8 +68,8 @@ const Register = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                required
                 disabled={loading}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -73,8 +79,8 @@ const Register = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
                 disabled={loading}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -84,8 +90,8 @@ const Register = () => {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                required
                 disabled={loading}
+                required
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
