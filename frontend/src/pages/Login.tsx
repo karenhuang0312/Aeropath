@@ -10,6 +10,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -19,12 +20,10 @@ const Login = () => {
 
     setLoading(true);
     try {
-  await login(username, password);
-  navigate('/dashboard');
-} catch (error: any) {
-  setErrorMessage(error.message || 'Login failed');
-}
-      // Error is handled in the auth hook
+      await login(username, password);
+      navigate('/dashboard');
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -41,6 +40,9 @@ const Login = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {errorMessage && (
+              <div className="text-red-500 text-sm">{errorMessage}</div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input
@@ -82,12 +84,3 @@ const Login = () => {
 };
 
 export default Login;
-<Button type="submit" className="w-full" disabled={loading}>
-  {loading ? <Spinner /> : 'Login'}
-</Button>
-export const Spinner = () => (
-  <svg className="animate-spin h-5 w-5 text-white mx-auto" viewBox="0 0 24 24">
-    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
-  </svg>
-);
