@@ -47,7 +47,9 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id: number) => {
-    await deletePost(id);
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      await deletePost(id);
+    }
   };
 
   return (
@@ -74,7 +76,6 @@ const Dashboard = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
         {/* Create/Edit Post Section */}
         <div className="mb-8">
           <Button onClick={() => { setShowCreateForm(true); setEditingPost(null); }} className="mb-6">
@@ -125,15 +126,16 @@ const Dashboard = () => {
 
         {/* Posts Section */}
         <div className="grid gap-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-900">Your Posts</h2>
-          </div>
+          <h2 className="text-xl font-semibold text-gray-900">Your Posts</h2>
           {loading ? (
             <div className="text-center py-8"><p className="text-gray-500">Loading posts...</p></div>
           ) : error ? (
             <div className="text-center text-red-500 py-8">{error}</div>
           ) : posts.length === 0 ? (
-            <div className="text-center py-8"><p className="text-gray-500">No posts yet.</p></div>
+            <div className="text-center py-8">
+              <p className="text-gray-500 mb-4">No posts yet.</p>
+              <Button onClick={() => setShowCreateForm(true)}>Create your first post</Button>
+            </div>
           ) : (
             <div className="space-y-4">
               {posts.filter(p => p.authorId === user?.id).map(post => (
@@ -147,8 +149,12 @@ const Dashboard = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="flex space-x-2">
-                      <Button size="sm" onClick={() => handleEdit(post)}><Edit className="h-4 w-4 mr-1" />Edit</Button>
-                      <Button size="sm" variant="destructive" onClick={() => handleDelete(post.id)}><Trash2 className="h-4 w-4 mr-1" />Delete</Button>
+                      <Button size="sm" onClick={() => handleEdit(post)} aria-label="Edit post">
+                        <Edit className="h-4 w-4 mr-1" />Edit
+                      </Button>
+                      <Button size="sm" variant="destructive" onClick={() => handleDelete(post.id)} aria-label="Delete post">
+                        <Trash2 className="h-4 w-4 mr-1" />Delete
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -190,38 +196,6 @@ const Dashboard = () => {
       </main>
     </div>
   );
-  <Button size="sm" onClick={() => handleEdit(post)} aria-label="Edit post">
-  <Edit className="h-4 w-4 mr-1" />Edit
-</Button>
-<Button size="sm" variant="destructive" onClick={() => handleDelete(post.id)} aria-label="Delete post">
-  <Trash2 className="h-4 w-4 mr-1" />Delete
-</Button>
 };
 
 export default Dashboard;
-<Toggle
-  checked={formData.published}
-  onChange={val => setFormData({ ...formData, published: val })}
-/>
-const handleDelete = async (id: number) => {
-  if (window.confirm('Are you sure you want to delete this post?')) {
-    await deletePost(id);
-  }
-};
-{successMessage && <div className="text-green-500 mb-2">{successMessage}</div>}
-export const DashboardPosts = ({ posts, user, handleEdit, handleDelete }) => (
-  <div className="space-y-4">
-    {posts.filter(p => p.authorId === user?.id).map(post => (
-      <Card key={post.id}>
-        {/* ... */}
-      </Card>
-    ))}
-  </div>
-);
-<DashboardPosts posts={posts} user={user} handleEdit={handleEdit} handleDelete={handleDelete} />
-{posts.length === 0 && (
-  <div className="text-center py-8">
-    <p className="text-gray-500 mb-4">No posts yet.</p>
-    <Button onClick={() => setShowCreateForm(true)}>Create your first post</Button>
-  </div>
-)}
