@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'sonner';
 
 import { AuthProvider, useAuth } from './hooks/useAuth';
-import { LanguageProvider, useLanguage } from './context/LanguageProvider';
 
 import LanguageSelect from './pages/LanguageSelect';
 import Home from './pages/Home';
@@ -26,34 +25,24 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
-// Language gate — redirect to language selection if none is selected
-const LanguageGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { language } = useLanguage();
-  return language ? <>{children}</> : <LanguageSelect />;
-};
-
 function App() {
   return (
-    <LanguageProvider>
-      <LanguageGate>
-        <AuthProvider>
-          <Router>
-            <div className="App">
-              <Routes>
-                <Route path="/select-language" element={<LanguageSelect />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-              <Toaster position="top-right" />
-            </div>
-          </Router>
-        </AuthProvider>
-      </LanguageGate>
-    </LanguageProvider>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/select-language" element={<LanguageSelect />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Toaster position="top-right" />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
