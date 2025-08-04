@@ -1,4 +1,5 @@
-import React from 'react';
+// src/App.tsx
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
@@ -11,25 +12,32 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 
+// Loading spinner (can replace with your own)
+const LoadingScreen = () => (
+  <div className="min-h-screen flex items-center justify-center text-white bg-[#091930] text-xl">
+    Loading...
+  </div>
+);
+
 // Route for authenticated users
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (loading) return <LoadingScreen />;
   return user ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 // Route for unauthenticated users
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (loading) return <LoadingScreen />;
   return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
+        <Suspense fallback={<LoadingScreen />}>
           <Routes>
             <Route path="/select-language" element={<LanguageSelect />} />
             <Route path="/" element={<Home />} />
@@ -39,11 +47,11 @@ function App() {
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-          <Toaster position="top-right" />
-        </div>
+        </Suspense>
+        <Toaster position="top-right" richColors />
       </Router>
     </AuthProvider>
   );
-}
+};
 
 export default App;
