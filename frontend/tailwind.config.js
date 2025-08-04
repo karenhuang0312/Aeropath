@@ -19,7 +19,6 @@ export default {
     },
     extend: {
       colors: {
-        // Design tokens from your existing project
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -53,16 +52,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-
-        // From Figma/Anima for specific figma classes
-        "colors-labels-primary": "var(--colors-labels-primary)",
-        "liquid-glass-labels-controls-tertiary":
-          "var(--liquid-glass-labels-controls-tertiary)",
-
-        // Optional: hardcoded Figma brand colors
-        "aeropath-navy": "#091930",
-        "aeropath-gold": "#D4B463",
-        "aeropath-cream": "#EDEAE0",
       },
       borderRadius: {
         lg: "var(--radius)",
