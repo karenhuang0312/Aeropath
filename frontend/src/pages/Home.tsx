@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DateAndTimePicker } from '../components/DateAndTimePicker';
+import DateAndTimePicker from '../components/DateAndTimePicker';
 
 const Home = () => {
   const navigate = useNavigate();
