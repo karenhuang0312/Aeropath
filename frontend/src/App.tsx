@@ -12,7 +12,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 
-// Loading spinner (can replace with your own)
+// Loading spinner
 const LoadingScreen = () => (
   <div className="min-h-screen flex items-center justify-center text-white bg-[#091930] text-xl">
     Loading...
