@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import DateAndTimePicker from '../components/DateAndTimePicker'; // Make sure this path is correct
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,6 +30,11 @@ const Home = () => {
         >
           Search Flights
         </button>
+
+        {/* Anima Date and Time Picker */}
+        <div className="mt-12 w-full max-w-md">
+          <DateAndTimePicker />
+        </div>
       </header>
 
       {/* Features Section */}
