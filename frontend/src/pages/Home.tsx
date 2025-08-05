@@ -1,83 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const airlineLinks = {
-  delta: 'https://www.delta.com/',
-  spirit: 'https://www.spirit.com/',
-  united: 'https://www.united.com/',
-  southwest: 'https://www.southwest.com/',
-  american: 'https://www.aa.com/',
-};
-
 const destinations = [
-  { label: 'Paris, France', value: 'paris' },
-  { label: 'Tokyo, Japan', value: 'tokyo' },
-  { label: 'New York, USA', value: 'new-york' },
+  { label: 'Paris, France', value: 'CDG' },
+  { label: 'Tokyo, Japan', value: 'NRT' },
+  { label: 'New York, USA', value: 'JFK' },
 ];
 
-const airlines = [
-  { label: 'Delta Airlines', value: 'delta' },
-  { label: 'Spirit Airlines', value: 'spirit' },
-  { label: 'United Airlines', value: 'united' },
-  { label: 'Southwest Airlines', value: 'southwest' },
-  { label: 'American Airlines', value: 'american' },
-];
+const Home = () => {
+  const navigate = useNavigate();
 
-const Search = () => {
-  const [destination, setDestination] = useState('');
-  const [airline, setAirline] = useState('');
-
-  const handleSearch = () => {
-    if (!destination || !airline) return alert('Please select both destination and airline.');
-
-    const airlineURL = airlineLinks[airline];
-    if (airlineURL) {
-      window.open(airlineURL, '_blank');
-    }
+  const handleCardClick = (destination: string) => {
+    navigate(`/search?destination=${destination}`);
   };
 
   return (
     <div className="min-h-screen bg-[#091930] text-white py-20 px-4">
-      <div className="max-w-xl mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-6 text-[#D4B463]">Search Flights</h1>
-
-        <div className="mb-4 text-left">
-          <label className="block mb-2">Select Destination</label>
-          <select
-            className="w-full p-3 rounded-md text-black"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
+      <div className="max-w-xl mx-auto text-center space-y-4">
+        <h1 className="text-4xl font-bold mb-6 text-[#D4B463]">Explore Destinations</h1>
+        {destinations.map((dest) => (
+          <div
+            key={dest.value}
+            onClick={() => handleCardClick(dest.value)}
+            className="bg-white text-black p-4 rounded-lg shadow hover:bg-gray-100 cursor-pointer transition"
           >
-            <option value="">-- Choose a destination --</option>
-            {destinations.map((d) => (
-              <option key={d.value} value={d.value}>{d.label}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-6 text-left">
-          <label className="block mb-2">Select Airline</label>
-          <select
-            className="w-full p-3 rounded-md text-black"
-            value={airline}
-            onChange={(e) => setAirline(e.target.value)}
-          >
-            <option value="">-- Choose an airline --</option>
-            {airlines.map((a) => (
-              <option key={a.value} value={a.value}>{a.label}</option>
-            ))}
-          </select>
-        </div>
-
-        <button
-          onClick={handleSearch}
-          className="bg-[#D4B463] text-[#091930] px-6 py-3 rounded-full text-lg hover:bg-[#bda253]"
-        >
-          Book Now
-        </button>
+            {dest.label}
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default Search;
+export default Home;
