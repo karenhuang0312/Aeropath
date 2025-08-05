@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
-import logo from '../assets/aeropath-logo.png';
 
 const Register = () => {
   const [username, setUsername] = useState('');
