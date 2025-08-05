@@ -77,17 +77,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F5F0DC] text-[#091930]">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-[#091930] font-serif">Aeropath Dashboard</h1>
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-gray-600">
+            <div className="flex items-center space-x-2 text-[#091930]">
               <User className="h-5 w-5" />
               <span>{user?.username}</span>
             </div>
-            <Button variant="outline" onClick={handleLogout}>
+            <Button variant="outline" onClick={handleLogout} className="text-[#091930]">
               <LogOut className="h-4 w-4 mr-2" />
               Logout
             </Button>
@@ -95,24 +95,23 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Create/Edit Post Section */}
-        <div className="mb-8">
+      <main className="max-w-5xl mx-auto px-4 py-10">
+        <section className="mb-12">
           <Button
             onClick={() => {
               setShowForm(true);
               setEditingPost(null);
             }}
-            className="mb-6"
+            className="bg-[#D4B463] hover:bg-[#bda253] text-[#091930] mb-6"
           >
             <Plus className="h-4 w-4 mr-2" />
             Create New Post
           </Button>
 
           {(showForm || editingPost) && (
-            <Card className="mb-6">
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+            <Card className="mb-8 bg-white">
+              <CardContent className="py-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <Label htmlFor="title">Title</Label>
                     <Input
@@ -122,6 +121,7 @@ const Dashboard = () => {
                         setFormData({ ...formData, title: e.target.value })
                       }
                       required
+                      className="text-black"
                     />
                   </div>
                   <div>
@@ -132,6 +132,7 @@ const Dashboard = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, content: e.target.value })
                       }
+                      className="text-black"
                     />
                   </div>
                   <div className="flex items-center space-x-2">
@@ -148,15 +149,11 @@ const Dashboard = () => {
                     />
                     <Label htmlFor="published">Published</Label>
                   </div>
-                  <div className="flex space-x-2">
-                    <Button type="submit">
+                  <div className="flex space-x-3">
+                    <Button type="submit" className="bg-[#D4B463] text-[#091930]">
                       {editingPost ? "Update" : "Create"}
                     </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={resetForm}
-                    >
+                    <Button type="button" variant="outline" onClick={resetForm}>
                       Cancel
                     </Button>
                   </div>
@@ -164,25 +161,21 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           )}
-        </div>
 
-        {/* User Posts */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Your Posts
-          </h2>
+          {/* User Posts */}
+          <h2 className="text-2xl font-semibold mb-4">Your Posts</h2>
           {loading ? (
-            <p className="text-gray-500 text-center">Loading posts...</p>
+            <p className="text-gray-600">Loading posts...</p>
           ) : error ? (
-            <p className="text-red-500 text-center">{error}</p>
+            <p className="text-red-600">{error}</p>
           ) : posts.filter((p) => p.authorId === user?.id).length === 0 ? (
-            <p className="text-gray-500 text-center">No posts yet.</p>
+            <p className="text-gray-600">No posts yet.</p>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {posts
                 .filter((p) => p.authorId === user?.id)
                 .map((post) => (
-                  <Card key={post.id}>
+                  <Card key={post.id} className="bg-white">
                     <CardHeader>
                       <CardTitle>
                         {post.title}
@@ -221,19 +214,17 @@ const Dashboard = () => {
 
         {/* All Posts */}
         <section>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            All Posts
-          </h2>
+          <h2 className="text-2xl font-semibold mb-4">All Posts</h2>
           {loading ? (
-            <p className="text-center text-gray-500">Loading...</p>
+            <p className="text-gray-600">Loading...</p>
           ) : error ? (
-            <p className="text-center text-red-500">{error}</p>
+            <p className="text-red-600">{error}</p>
           ) : posts.length === 0 ? (
-            <p className="text-center text-gray-500">No posts found.</p>
+            <p className="text-gray-600">No posts found.</p>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {posts.map((post) => (
-                <Card key={post.id}>
+                <Card key={post.id} className="bg-white">
                   <CardHeader>
                     <CardTitle>
                       {post.title}
@@ -244,10 +235,7 @@ const Dashboard = () => {
                       )}
                     </CardTitle>
                     <CardDescription>
-                      by{" "}
-                      <span className="font-medium">
-                        {post.author?.username || "Unknown"}
-                      </span>
+                      by <span className="font-medium">{post.author?.username || "Unknown"}</span>
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
