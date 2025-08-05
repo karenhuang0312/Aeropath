@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../db');
+const db = require('../db'); // Assumes Prisma or similar ORM
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-producti
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
   const token = req.cookies.token;
-  
+
   if (!token) {
     return res.status(401).json({ error: 'Access denied. No token provided.' });
   }
@@ -29,12 +29,10 @@ router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Check if user already exists
-    const existingUser = db.user.findFirst({
+    // ✅ Await DB call
+    const existingUser = await db.user.findFirst({
       where: {
-        OR: [
-          { username }
-        ]
+        username
       }
     });
 
@@ -42,26 +40,22 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'User already exists with this username' });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
-    const user = db.user.create({
-      username,
-      password: hashedPassword
+    // ✅ Create user with await and correct structure
+    const user = await db.user.create({
+      data: {
+        username,
+        password: hashedPassword
+      }
     });
 
-    // Add username to destructuring
-    const { username, password } = req.body;
-    
-    // Generate JWT token
     const token = jwt.sign(
       { userId: user.id, username: user.username },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
 
-    // Set cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -85,11 +79,10 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   try {
-    // FIX: Destructure username from req.body
     const { username, password } = req.body;
 
-    // Find user
-    const user = db.user.findUnique({
+    // ✅ Await DB call
+    const user = await db.user.findUnique({
       where: { username }
     });
 
@@ -97,25 +90,22 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    // Check password
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { userId: user.id, username: user.username },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
 
-    // Set cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.json({
@@ -134,7 +124,8 @@ router.post('/login', async (req, res) => {
 // Get current user
 router.get('/me', authenticateToken, async (req, res) => {
   try {
-    const user = db.user.findUnique({
+    // ✅ Await DB call
+    const user = await db.user.findUnique({
       where: { id: req.user.userId }
     });
 
@@ -142,7 +133,7 @@ router.get('/me', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    res.json({ 
+    res.json({
       user: {
         id: user.id,
         username: user.username,
