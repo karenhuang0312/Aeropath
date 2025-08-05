@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import logo from 'frontend/src/assets/aeropath-logo.png';
+import logo from '../../assets/aeropath-logo.png';
 
 const airlineLinks: Record<string, string> = {
   delta: 'https://www.delta.com/',
@@ -214,6 +214,10 @@ const Search = () => {
           <a href="#" className="text-[#D4B463]">Privacy Policy</a>
           <a href="#" className="text-[#D4B463]">Terms of Service</a>
           <a href="#" className="text-[#D4B463]">Careers</a>
+        </div>
+        <div className="mb-4 space-x-4">
+          <a href="mailto:aeropath67@gmail.com" className="text-[#D4B463] hover:underline">Gmail</a>
+          <a href="https://www.tiktok.com/@valetina69229" target="_blank" rel="noopener noreferrer" className="text-[#D4B463] hover:underline">TikTok</a>
         </div>
         <div>© 2025 Aeropath · All Rights Reserved</div>
       </footer>
