@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/aeropath-logo.png'; // Adjust path based on your folder structure
 
 const destinations = [
   {
