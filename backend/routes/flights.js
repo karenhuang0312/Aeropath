@@ -8,25 +8,25 @@ if (!RAPIDAPI_KEY) {
   console.warn("⚠️ RAPIDAPI_KEY is not set in environment variables.");
 }
 
-// Helper to format AeroDataBox flight data
+// Helper: Format AeroDataBox data
 function mapAeroFlights(data) {
   return data.departures.map((flight, i) => ({
-    id: flight.number || `flight-${i}`,
-    origin: flight.departure.airport.icao || "N/A",
-    destination: flight.arrival.airport.icao || "N/A",
-    date: flight.departure.scheduledTimeLocal?.split('T')[0] || "N/A",
-    airline: flight.airline.name || "Unknown",
-    price: Math.floor(Math.random() * 300) + 200, // Placeholder price
-    link: `https://www.${flight.airline.name?.toLowerCase().replace(/\s/g, '')}.com/` || "#",
+    id: `flight-${i}`,
+    origin: flight.departure?.airport?.icao || "Unknown",
+    destination: flight.arrival?.airport?.icao || "Unknown",
+    date: flight.departure?.scheduledTimeLocal || "N/A",
+    airline: flight.airline?.name || "Unknown",
+    flightNumber: flight.flight?.number,
+    status: flight.status || "N/A",
   }));
 }
 
-// GET /api/flights?origin=JFK&destination=CDG&date=2025-09-01
+// Example endpoint: /api/flights?origin=JFK&destination=CDG&date=2025-09-01
 router.get('/', async (req, res) => {
   const { origin, destination, date } = req.query;
 
   if (!origin || !destination || !date) {
-    return res.status(400).json({ error: "Missing origin, destination, or date" });
+    return res.status(400).json({ error: 'Missing origin, destination, or date' });
   }
 
   try {
@@ -37,19 +37,22 @@ router.get('/', async (req, res) => {
       },
       params: {
         direction: 'Departure',
-        withLeg: false,
-      },
+        withLeg: 'false',
+        withCancelled: 'false',
+        withCodeshared: 'false',
+        withCargo: 'false',
+        withPrivate: 'false',
+      }
     });
 
-    const allFlights = response.data;
-    const filtered = allFlights.departures.filter(
-      (flight) => flight.arrival?.airport?.icao === destination
+    const results = mapAeroFlights(response.data).filter(
+      (f) => f.destination === destination
     );
 
-    res.json(mapAeroFlights({ departures: filtered }));
+    res.json(results);
   } catch (error) {
     console.error("❌ AeroDataBox API error:", error.response?.data || error.message);
-    res.status(500).json({ error: "Failed to fetch flights from AeroDataBox." });
+    res.status(500).json({ error: "Failed to fetch flights from AeroDataBox API." });
   }
 });
 
