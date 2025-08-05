@@ -5,7 +5,7 @@ const db = require('../db'); // Assumes Prisma or similar ORM
 
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET || '1ce9874febfe9805d9f9cbc489f3e3a8fb464fd10bbe867437cf41b4d9b2f74d';
 
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
