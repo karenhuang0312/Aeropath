@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import logo from '../../assets/aeropath-logo.png';
+import logo from '../assets/aeropath-logo.png';
 
 const airlineLinks: Record<string, string> = {
   delta: 'https://www.delta.com/',
