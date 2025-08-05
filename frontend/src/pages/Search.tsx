@@ -217,7 +217,7 @@ const Search = () => {
         </div>
         <div className="mb-4 space-x-4">
           <a href="mailto:aeropath67@gmail.com" className="text-[#D4B463] hover:underline">Gmail</a>
-          <a href="https://www.tiktok.com/@valetina69229" target="_blank" rel="noopener noreferrer" className="text-[#D4B463] hover:underline">TikTok</a>
+          <a href="https://www.tiktok.com/@aeropath_" target="_blank" rel="noopener noreferrer" className="text-[#D4B463] hover:underline">TikTok</a>
         </div>
         <div>© 2025 Aeropath · All Rights Reserved</div>
       </footer>
