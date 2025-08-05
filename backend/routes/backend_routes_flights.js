@@ -2,58 +2,54 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-const KIWI_API_KEY = process.env.KIWI_API_KEY;
+const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 
-if (!KIWI_API_KEY) {
-  console.warn("⚠️ KIWI_API_KEY is not set in environment variables.");
+if (!RAPIDAPI_KEY) {
+  console.warn("⚠️ RAPIDAPI_KEY is not set in environment variables.");
 }
 
-// Helper: Map Kiwi flight data to frontend format
-function mapKiwiFlights(data) {
-  return data.map((flight, i) => ({
-    id: flight.id || `flight-${i}`,
-    origin: flight.cityFrom,
-    destination: flight.cityTo,
-    date: flight.local_departure?.slice(0, 10) || "N/A",
-    airline: flight.airlines?.[0] || "Unknown",
-    price: flight.price,
-    link: flight.deep_link,
+// Helper to format AeroDataBox flight data
+function mapAeroFlights(data) {
+  return data.departures.map((flight, i) => ({
+    id: flight.number || `flight-${i}`,
+    origin: flight.departure.airport.icao || "N/A",
+    destination: flight.arrival.airport.icao || "N/A",
+    date: flight.departure.scheduledTimeLocal?.split('T')[0] || "N/A",
+    airline: flight.airline.name || "Unknown",
+    price: Math.floor(Math.random() * 300) + 200, // Placeholder price
+    link: `https://www.${flight.airline.name?.toLowerCase().replace(/\s/g, '')}.com/` || "#",
   }));
 }
 
-// Route: GET /api/flights?origin=JFK&destination=LAX&date=2025-08-10&sort=price
+// GET /api/flights?origin=JFK&destination=CDG&date=2025-09-01
 router.get('/', async (req, res) => {
-  const { origin, destination, date, sort } = req.query;
+  const { origin, destination, date } = req.query;
 
   if (!origin || !destination || !date) {
-    return res.status(400).json({ error: "Missing required query parameters: origin, destination, or date." });
-  }
-
-  if (!KIWI_API_KEY) {
-    return res.status(500).json({ error: "KIWI_API_KEY not set in environment." });
+    return res.status(400).json({ error: "Missing origin, destination, or date" });
   }
 
   try {
-    const response = await axios.get('https://api.tequila.kiwi.com/v2/search', {
+    const response = await axios.get(`https://aerodatabox.p.rapidapi.com/flights/airports/icao/${origin}/${date}`, {
       headers: {
-        apikey: KIWI_API_KEY,
+        'X-RapidAPI-Key': RAPIDAPI_KEY,
+        'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
       },
       params: {
-        fly_from: origin,
-        fly_to: destination,
-        date_from: date,
-        date_to: date,
-        sort: sort === "price" ? "price" : "quality",
-        limit: 20,
-        curr: "USD",
+        direction: 'Departure',
+        withLeg: false,
       },
     });
 
-    const results = mapKiwiFlights(response.data.data);
-    res.json(results);
+    const allFlights = response.data;
+    const filtered = allFlights.departures.filter(
+      (flight) => flight.arrival?.airport?.icao === destination
+    );
+
+    res.json(mapAeroFlights({ departures: filtered }));
   } catch (error) {
-    console.error("❌ Kiwi API error:", error.response?.data || error.message);
-    res.status(500).json({ error: "Failed to fetch flights from Kiwi API." });
+    console.error("❌ AeroDataBox API error:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to fetch flights from AeroDataBox." });
   }
 });
 
