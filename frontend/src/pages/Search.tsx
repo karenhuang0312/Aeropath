@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import logo from '../assets/aeropath-logo.png'; // Make sure this path is correct
 
 const airlineLinks: Record<string, string> = {
   delta: 'https://www.delta.com/',
@@ -45,7 +46,6 @@ const Search = () => {
     setLoading(true);
 
     try {
-      // Optional: Save search if user is authenticated
       const token = localStorage.getItem('token');
       if (token) {
         await axios.post(
@@ -55,7 +55,6 @@ const Search = () => {
         );
       }
 
-      // Call flight API
       const res = await axios.get('/api/flights', {
         params: {
           origin: 'JFK',
@@ -83,49 +82,60 @@ const Search = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#091930] text-white py-20 px-4">
-      <div className="max-w-xl mx-auto text-center">
+    <div
+      className="min-h-screen bg-[#F5F0DC] text-[#091930] px-4 py-12"
+      style={{ fontFamily: 'Georgia, serif' }}
+    >
+      <div className="max-w-2xl mx-auto text-center">
+        {/* Logo */}
+        <img src={logo} alt="Aeropath Logo" className="w-40 mx-auto mb-8" />
+
+        {/* Title */}
         <h1 className="text-4xl font-bold mb-6 text-[#D4B463]">Search Flights</h1>
 
-        <div className="mb-4 text-left">
-          <label className="block mb-2">Select Destination</label>
-          <select
-            className="w-full p-3 rounded-md text-black"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          >
-            <option value="">-- Choose a destination --</option>
-            {destinations.map((d) => (
-              <option key={d.value} value={d.value}>{d.label}</option>
-            ))}
-          </select>
+        {/* Form */}
+        <div className="space-y-4 text-left">
+          <div>
+            <label className="block mb-2 font-semibold">Destination</label>
+            <select
+              className="w-full p-3 rounded-md text-black"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+            >
+              <option value="">-- Choose a destination --</option>
+              {destinations.map((d) => (
+                <option key={d.value} value={d.value}>{d.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block mb-2 font-semibold">Date</label>
+            <input
+              type="date"
+              className="w-full p-3 rounded-md text-black"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-semibold">Airline</label>
+            <select
+              className="w-full p-3 rounded-md text-black"
+              value={airline}
+              onChange={(e) => setAirline(e.target.value)}
+            >
+              <option value="">-- Choose an airline --</option>
+              {airlines.map((a) => (
+                <option key={a.value} value={a.value}>{a.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div className="mb-4 text-left">
-          <label className="block mb-2">Select Date</label>
-          <input
-            type="date"
-            className="w-full p-3 rounded-md text-black"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-6 text-left">
-          <label className="block mb-2">Select Airline</label>
-          <select
-            className="w-full p-3 rounded-md text-black"
-            value={airline}
-            onChange={(e) => setAirline(e.target.value)}
-          >
-            <option value="">-- Choose an airline --</option>
-            {airlines.map((a) => (
-              <option key={a.value} value={a.value}>{a.label}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-center gap-4">
+        {/* Buttons */}
+        <div className="flex flex-col md:flex-row justify-center gap-4 mt-6">
           <button
             onClick={handleSearch}
             className="bg-[#D4B463] text-[#091930] px-6 py-3 rounded-full text-lg hover:bg-[#bda253]"
@@ -144,7 +154,7 @@ const Search = () => {
         {/* Results */}
         {flights.length > 0 && (
           <div className="mt-10 text-left">
-            <h2 className="text-2xl font-bold mb-4">Results:</h2>
+            <h2 className="text-2xl font-bold mb-4 text-[#D4B463]">Available Flights:</h2>
             <ul className="space-y-4">
               {flights.map((flight: any) => (
                 <li key={flight.id} className="bg-white text-black p-4 rounded-md shadow">
