@@ -38,17 +38,19 @@ const App = () => {
     <AuthProvider>
       <Router>
         <Suspense fallback={<LoadingScreen />}>
-          <Routes>
-            <Route path="/select-language" element={<LanguageSelect />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <div className="bg-[#091930] min-h-screen text-white font-sans">
+            <Routes>
+              <Route path="/select-language" element={<LanguageSelect />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+            <Toaster position="top-right" richColors />
+          </div>
         </Suspense>
-        <Toaster position="top-right" richColors />
       </Router>
     </AuthProvider>
   );
