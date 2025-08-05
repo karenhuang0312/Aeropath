@@ -1,5 +1,259 @@
+rei
+rei5996
+Invisible
+
+★ maddie ★ — 9:12 AM
+i also added two things to the problem page
+rei — 9:13 AM
+I see
+That’s good
+I’m gonna wake up now
+And see it
+Bc I’m still in bed
+★ maddie ★ — 9:16 AM
+alright
+rei — 9:37 AM
+wait madelyn can i see the tiktok account?
+★ maddie ★ — 9:38 AM
+the thing is with the account is that i tried to change the pfp and the username but it doesn't work
+rei — 9:39 AM
+hmm
+★ maddie ★ — 9:39 AM
+https://www.tiktok.com/@valetina69229
+TikTok
+AeroPath on TikTok
+@valetina69229 0 Followers, 0 Following, 0 Likes - Watch awesome short videos created by AeroPath
+Image
+rei — 9:39 AM
+ohhh i thought it was that
+★ maddie ★ — 9:39 AM
+you can try and doing it
+ill give you the acount
+rei — 9:39 AM
+i would need the login
+yeah
+★ maddie ★ — 9:40 AM
+email vatina6789@gmail.com
+pass valevaletin@
+rei — 9:42 AM
+im making a gmail account also
+the email is
+aeropath67@gmail.com
+★ maddie ★ — 9:42 AM
+hmmm
+rei — 9:42 AM
+password: Aeropathisthebest@67
+★ maddie ★ — 9:42 AM
+great email
+rei — 9:45 AM
+wait is ur account with google?
+★ maddie ★ — 9:45 AM
+mhm
+rei — 9:45 AM
+oh okay
+★ maddie ★ — 9:45 AM
+its the valentina account
+rei — 9:45 AM
+wait
+can you go into the email
+of the balentina account
+bc ineed a confirmation coe
+de
+code
+★ maddie ★ — 9:48 AM
+it says i need to take action-
+rei — 9:48 AM
+wat....
+was there a code?
+★ maddie ★ — 9:48 AM
+no
+it says it went to the recovery email that doesn't exist
+rei — 9:49 AM
+why
+oh my
+wair
+★ maddie ★ — 9:49 AM
+i made it my gmail
+rei — 9:49 AM
+https://g.co/verifyaccount
+click
+u have the account
+so it says that i must ask someone with the account
+to allow me to use it
+i believe
+★ maddie ★ — 9:50 AM
+i got it
+i clicked yes
+rei — 9:50 AM
+okay
+wait if it sent u another one
+could u cilck yes again
+https://g.co/verifyaccount
+wait im just gonna send you something but its for me to remember
+home.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/aeropath-logo.png'; // Adjust path based on your folder structure
+
+const destinations = [
+  {
+Expand
+message.txt
+9 KB
+★ maddie ★ — 10:01 AM
+i verified again
+rei — 10:01 AM
+yes
+im in
+★ maddie ★ — 10:01 AM
+also wondering if your brother is taking you today?
+rei — 10:02 AM
+no
+do u want to take me?
+★ maddie ★ — 10:02 AM
+bc i'm in the car with my mom to go to home depot and she needed to know if she needed to take you
+i always want to take you
+rei — 10:02 AM
+ohh i see
+well if u can
+please
+★ maddie ★ — 10:02 AM
+of course
+rei — 10:02 AM
+yayyy
+★ maddie ★ — 10:02 AM
+yayayayayay
+also
+you know how we called my sister and liked joked around about like the flooding and stuff like that
+rei — 10:03 AM
+yes
+★ maddie ★ — 10:04 AM
+when i got home she started crying when she saw me and i didn't know why but basically she thought that i was in danger and that i really thought i was dying because she couldn't tell over the phone
+so she got scared
+rei — 10:04 AM
+...
+really
+oh my gosh
+★ maddie ★ — 10:04 AM
+yeah
+i felt so bad
+☹️
+rei — 10:05 AM
+if i told my sister or brother that
+they would not have cared
+★ maddie ★ — 10:05 AM
+thats why you call me instead 😔 🤩
+rei — 10:05 AM
+yeahhhh
+i cant change the pfp for the tiktok
+😔
+★ maddie ★ — 10:06 AM
+its weird
+i can't changed the user either
+rei — 10:06 AM
+yeah
+im going to make another account
+with my email
+is that fine
+★ maddie ★ — 10:06 AM
+i can use morris
+rei — 10:06 AM
+wait
+im going to use
+the aeropath email
+to see if it works
+★ maddie ★ — 10:06 AM
+ohh
+rei — 10:06 AM
+yeah
+★ maddie ★ — 10:06 AM
+i tried to sign in it said it didn't exist
+rei — 10:07 AM
+the aeropath one?
+★ maddie ★ — 10:07 AM
+yeah
+dont know if you made it
+rei — 10:07 AM
+I did create it
+Hmm
+★ maddie ★ — 10:09 AM
+i got in
+😎 👍
+rei — 10:10 AM
+okay perfect
+★ maddie ★ — 10:10 AM
+did you amke the tiktok acc?
+rei — 10:11 AM
+Yeah
+wait
+https://www.tiktok.com/@aeropath_
+TikTok
+aeropath_ on TikTok
+@aeropath_ 0 Followers, 0 Following, 0 Likes - Watch awesome short videos created by aeropath_
+Image
+the account you have to just login with google
+and also
+follow the account
+we gotta seem like
+were not followerless
+★ maddie ★ — 10:11 AM
+i just did 😭
+i did it befroe you told me lol
+rei — 10:11 AM
+yes
+★ maddie ★ — 10:12 AM
+change the nickname to AeroPath instead of the user
+rei — 10:12 AM
+oh yeah
+can u tell everyone
+on the gilmore crew
+to follow it
+★ maddie ★ — 10:13 AM
+sure
+wait
+cant text groups on lap top
+rei — 10:14 AM
+ahhhh
+★ maddie ★ — 10:14 AM
+no ipad on me either
+rei — 10:14 AM
+ill ask individiually thn
+then
+★ maddie ★ — 10:51 AM
+wait
+karen
+do you have the model
+???
+like what the website would look like?
+rei — 10:54 AM
+No
+It can’t run properly
+But I’m trying to make it work
+★ maddie ★ — 10:55 AM
+i don't know how to get my thingy onto github
+its so confusing
+😭
+rei — 10:55 AM
+i cant get the thing to run and vidal said we wont be done by like now
+we will still have to work on it when we go there
+or smth
+★ maddie ★ — 11:32 AM
+we are outside
+﻿
+★ maddie ★
+hyunjinn.hwang
+she/her
+ 
+"it's really important to show the world who you are...there's going to be people who are gonna open up and accept you as well” - Bang Chan
+
+"I hate people"
+
+Birthday: ??.03.08
+
+MBTI: ESTP
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import logo from '../assets/aeropath-logo.png'; // Adjust path based on your folder structure
 
 const destinations = [
   {
@@ -201,3 +455,5 @@ const Home = () => {
 };
 
 export default Home;
+message.txt
+9 KB
