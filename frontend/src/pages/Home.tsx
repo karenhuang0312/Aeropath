@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/aeropath-logo.png'; // Adjust path based on your folder structure
 
 const destinations = [
-  { label: 'Paris, France', value: 'CDG' },
-  { label: 'Tokyo, Japan', value: 'NRT' },
-  { label: 'New York, USA', value: 'JFK' },
+  {
+    label: 'Paris, France',
+    value: 'CDG',
+    image: 'https://artfulliving.com/wp-content/uploads/2023/12/PARIS_FEAT_Photography-by-Mlenny.png',
+  },
+  {
+    label: 'Tokyo, Japan',
+    value: 'NRT',
+    image: 'https://images.squarespace-cdn.com/content/v1/577b32a84402436cdf31b64d/1561792335426-YB46HO7M3IYR39PZIGCF/image-asset.jpeg',
+  },
+  {
+    label: 'New York, USA',
+    value: 'JFK',
+    image: 'https://cdn-imgix.headout.com/blog-banner/image/46ad2dc792a98407d86b43122f3ed59f-Banner.jpg',
+  },
 ];
 
 const Home = () => {
@@ -38,7 +51,10 @@ const Home = () => {
     <div className="bg-[#F5F0DC] text-[#091930] min-h-screen">
       {/* Navbar */}
       <header className="bg-[#091930] text-[#D4B463] flex flex-col md:flex-row justify-between items-center px-8 py-6">
-        <div className="text-3xl font-bold">AEROPATH</div>
+        <div className="flex items-center space-x-3">
+          <img src={logo} alt="Aeropath Logo" className="h-10 w-10" />
+          <span className="text-3xl font-bold">AEROPATH</span>
+        </div>
         <nav className="flex space-x-6 mt-4 md:mt-0 text-white">
           <a href="#">Home</a>
           <a href="#">About</a>
@@ -97,17 +113,20 @@ const Home = () => {
         </form>
       </section>
 
-      {/* Destination Cards (React logic preserved) */}
+      {/* Destination Cards (with images) */}
       <section className="py-16 px-4 text-center">
         <h2 className="text-3xl font-bold text-[#D4B463] mb-6">Explore Destinations</h2>
-        <div className="max-w-2xl mx-auto space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {destinations.map((dest) => (
             <div
               key={dest.value}
               onClick={() => handleCardClick(dest.value)}
-              className="bg-white text-black p-4 rounded-lg shadow hover:bg-gray-100 cursor-pointer transition"
+              className="cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
             >
-              {dest.label}
+              <img src={dest.image} alt={dest.label} className="w-full h-48 object-cover" />
+              <div className="p-4 text-[#091930] font-semibold text-lg">
+                {dest.label}
+              </div>
             </div>
           ))}
         </div>
