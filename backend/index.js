@@ -7,6 +7,8 @@ const db = require("./db");
 const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
 const flightRoutes = require("./routes/flights");
+const flightsRouter = require('./routes/flights');
+app.use('/api/flights', flightsRouter);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
